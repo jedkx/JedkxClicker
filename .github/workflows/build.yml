@@ -2,11 +2,15 @@ name: Build JedkxClicker
 
 on:
   push:
+    branches:
+      - main
+    tags:
+      - "v*"
   pull_request:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -31,3 +35,10 @@ jobs:
           name: JedkxClicker-windows-x86
           path: JedkxClicker.exe
           if-no-files-found: error
+
+      - name: Create GitHub Release for version tags
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: JedkxClicker.exe

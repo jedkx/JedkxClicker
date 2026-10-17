@@ -1,0 +1,7 @@
+.vs/
+*.obj
+*.res
+*.pdb
+*.ilk
+*.idb
+app-icon.png

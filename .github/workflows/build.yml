@@ -1,0 +1,33 @@
+name: Build JedkxClicker
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up the MSVC x86 build environment
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x86
+
+      - name: Build portable executable
+        shell: cmd
+        run: build.bat
+
+      - name: Upload Windows executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: JedkxClicker-windows-x86
+          path: JedkxClicker.exe
+          if-no-files-found: error
